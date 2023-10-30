@@ -80,7 +80,7 @@ dependencies {
     compileOnly("ink.ptms.core:v11605:11605")
 
     // Hook Plugins
-    compileOnly("me.clip:placeholderapi:2.11.4") { isTransitive = false }
+    compileOnly("me.clip:placeholderapi:2.11.5") { isTransitive = false }
     compileOnly("ink.ptms:Zaphkiel:2.0.10") { isTransitive = false }
     compileOnly("ca.tweetzy:skulls:3.10.0") { isTransitive = false }
     compileOnly("com.github.MilkBowl:VaultAPI:8bad2c4") { isTransitive = false }
