@@ -5,7 +5,7 @@ val taboolibVersion: String by project
 plugins {
     id("org.gradle.java")
     id("org.gradle.maven-publish")
-    kotlin("jvm") version "1.9.10" apply false
+    kotlin("jvm") version "1.9.20" apply false
     id("io.izzel.taboolib") version "1.56" apply false
 }
 
