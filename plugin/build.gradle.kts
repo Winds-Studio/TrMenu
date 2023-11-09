@@ -91,7 +91,7 @@ dependencies {
     compileOnly("com.github.LoneDev6:api-itemsadder:3.6.1") { isTransitive = false }
     compileOnly("org.geysermc.floodgate:api:2.2.2-SNAPSHOT") { isTransitive = false }
     compileOnly("com.github.tritonmc.Triton:core:3.9.1") { isTransitive = false }
-    compileOnly("com.github.tritonmc.Triton:api:v3.9.0") { isTransitive = false }
+    compileOnly("com.github.tritonmc.Triton:api:3.9.1") { isTransitive = false }
 
     compileOnly(fileTree("libs"))
 }
