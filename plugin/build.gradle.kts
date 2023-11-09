@@ -87,7 +87,7 @@ dependencies {
     compileOnly("org.black_ixx:playerpoints:3.2.6") { isTransitive = false }
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1") { isTransitive = false }
     compileOnly("com.github.oraxen:oraxen:v1.163.0") { isTransitive = false }
-    compileOnly("net.skinsrestorer:skinsrestorer-api:15.0.2-SNAPSHOT") { isTransitive = false }
+    compileOnly("net.skinsrestorer:skinsrestorer-api:15.0.3") { isTransitive = false }
     compileOnly("com.github.LoneDev6:api-itemsadder:3.6.1") { isTransitive = false }
     compileOnly("org.geysermc.floodgate:api:2.2.2-SNAPSHOT") { isTransitive = false }
     compileOnly("com.github.tritonmc.Triton:core:3.9.1") { isTransitive = false }
