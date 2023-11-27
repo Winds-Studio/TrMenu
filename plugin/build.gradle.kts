@@ -68,7 +68,7 @@ dependencies {
     taboo(project(":api:action"))
 
     // Libraries
-    compileOnly("org.apache.commons:commons-lang3:3.13.0")
+    compileOnly("org.apache.commons:commons-lang3:3.14.0")
     compileOnly("com.electronwill.night-config:core:3.6.7")
 
     // Server Core
