@@ -93,7 +93,7 @@ dependencies {
     compileOnly("net.skinsrestorer:skinsrestorer-api:15.0.5-SNAPSHOT") { isTransitive = false }
     compileOnly("com.github.LoneDev6:api-itemsadder:3.6.1") { isTransitive = false }
     compileOnly("org.geysermc.floodgate:api:2.2.2-SNAPSHOT") { isTransitive = false }
-    compileOnly("com.github.tritonmc.Triton:core:3.9.3") { isTransitive = false }
+    compileOnly("com.github.tritonmc.Triton:core:3.9.4") { isTransitive = false }
     compileOnly("com.github.tritonmc.Triton:api:3.9.3") { isTransitive = false }
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.12.2") { isTransitive = false }
     compileOnly("com.github.FrancoBM12:API-MagicCosmetics:2.2.6") { isTransitive = false }
