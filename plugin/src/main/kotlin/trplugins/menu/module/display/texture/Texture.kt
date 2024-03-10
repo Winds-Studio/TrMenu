@@ -1,6 +1,5 @@
 package trplugins.menu.module.display.texture
 
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
@@ -38,7 +37,7 @@ class Texture(
 
         var itemStack = when (type) {
             TextureType.NORMAL -> parseMaterial(temp)
-            TextureType.HEAD -> Heads.getHead(temp)
+            TextureType.HEAD -> Heads.getPlayerHead(temp)
             TextureType.REPO -> ItemRepository.getItem(temp)
             TextureType.SOURCE -> ItemSource.fromSource(session, temp)
             TextureType.RAW -> ItemHelper.fromJson(temp)

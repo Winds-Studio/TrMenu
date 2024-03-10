@@ -236,7 +236,7 @@ class Assist {
     }
 
     fun getHead(name: String): ItemStack {
-        return Heads.getHead(name)
+        return Heads.getPlayerHead(name)
     }
 
     /**
