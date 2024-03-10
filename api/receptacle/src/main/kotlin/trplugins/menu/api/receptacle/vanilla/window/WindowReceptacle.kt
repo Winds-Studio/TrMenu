@@ -51,6 +51,13 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
         }
     }
 
+    override fun setElement(element: ItemStack?, slot: Int, display: Boolean) {
+        contents[slot] = element
+        if (display && viewer != null) {
+            nmsProxy<NMS>().sendWindowsSetSlot(viewer!!, slot = slot, itemStack = element, stateId = stateId)
+        }
+    }
+
     override fun clear(display: Boolean) {
         contents.indices.forEach { contents[it] = null }
         if (display) {

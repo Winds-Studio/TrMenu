@@ -19,7 +19,7 @@ abstract class Receptacle<Element>(val layout: ReceptacleLayout) {
     abstract fun getElement(slot: Int): Element?
     abstract fun hasElement(slot: Int): Boolean
     abstract fun setElement(element: Element? = null, vararg slots: Int, display: Boolean = true)
-
+    abstract fun setElement(element: Element? = null, slot: Int, display: Boolean = true)
     abstract fun clear(display: Boolean = true)
     abstract fun refresh(slot: Int = -1)
     abstract fun open(player: Player)

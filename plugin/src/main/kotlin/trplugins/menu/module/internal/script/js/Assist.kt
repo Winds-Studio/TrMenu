@@ -3,6 +3,7 @@ package trplugins.menu.module.internal.script.js
 import me.clip.placeholderapi.PlaceholderAPI
 import org.apache.commons.lang3.math.NumberUtils
 import org.bukkit.Bukkit
+import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -77,7 +78,6 @@ class Assist {
     fun addWhitelist(player: String): Boolean {
         return getOfflinePlayer(player).let {
             Bukkit.getWhitelistedPlayers().add(it)
-            true
         }
     }
 
@@ -85,11 +85,11 @@ class Assist {
         return Bukkit.getWhitelistedPlayers().removeIf { it.name.equals(player, true) }
     }
 
-    private fun getPlayer(player: String): Player? {
+    fun getPlayer(player: String): Player? {
         return Bukkit.getPlayerExact(player)
     }
 
-    private fun getOfflinePlayer(player: String): OfflinePlayer? {
+    fun getOfflinePlayer(player: String): OfflinePlayer? {
         return Bukkit.getOfflinePlayers().find { it.name.equals(player, true) }
     }
 
@@ -101,7 +101,7 @@ class Assist {
         return Bukkit.getOnlinePlayers().randomOrNull()
     }
 
-    private fun getPlayerInventory(player: String): PlayerInventory? {
+    fun getPlayerInventory(player: String): PlayerInventory? {
         return getPlayer(player)?.inventory
     }
 
@@ -117,7 +117,7 @@ class Assist {
     }
 
     // utils.getEquipment("Arasple", "HEAD")
-    private fun getEquipment(player: String, equipmentSlot: String): ItemStack? {
+    fun getEquipment(player: String, equipmentSlot: String): ItemStack? {
         return getPlayer(player)?.run {
             BukkitEquipment.getItems(this)[BukkitEquipment.fromNMS(equipmentSlot)]
         }
@@ -170,6 +170,18 @@ class Assist {
         return ItemBuilder(XMaterial.STONE)
     }
 
+    fun materialOf(name: String): XMaterial {
+        return XMaterial.matchXMaterial(name).orElse(XMaterial.STONE);
+    }
+
+    fun colorOf(rgb: Int): Color {
+        return Color.fromRGB(rgb)
+    }
+
+    fun getIconSlots(icon: String, session: MenuSession): List<Int>? {
+        return session.menu?.getIcon(icon)?.position?.currentPosition(session);
+    }
+
     fun getTellraw(): Components {
         return Components
     }
@@ -185,7 +197,7 @@ class Assist {
         return hasItem(getPlayer(player), identify)
     }
 
-    private fun hasItem(player: Player?, identify: String): Boolean {
+    fun hasItem(player: Player?, identify: String): Boolean {
         return player?.let { ItemMatcher.of(identify).hasItem(it) } ?: false
     }
 
@@ -231,7 +243,7 @@ class Assist {
         return hasPoints(player, toInt(points))
     }
 
-    private fun hasPoints(player: Player, points: Int): Boolean {
+    fun hasPoints(player: Player, points: Int): Boolean {
         return HookPlugin.getPlayerPoints().hasPoints(player, points)
     }
 
@@ -267,11 +279,11 @@ class Assist {
         }
     }
 
-    private fun toInt(number: String): Int {
+    fun toInt(number: String): Int {
         return number.toIntOrNull() ?: 0
     }
 
-    private fun toDouble(number: String, def: Double = 0.0): Double {
+    fun toDouble(number: String, def: Double = 0.0): Double {
         return number.toDoubleOrNull() ?: def
     }
 
@@ -279,7 +291,7 @@ class Assist {
         return toRoman(toInt(number))
     }
 
-    private fun toRoman(number: Int): String {
+    fun toRoman(number: Int): String {
         if (number < 1) return ""
         val mapNumber = romanNumbers.floorKey(number)
         return if (mapNumber == number) romanNumbers[number]!! else romanNumbers[mapNumber] + toRoman(number - mapNumber)

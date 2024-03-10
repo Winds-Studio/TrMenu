@@ -17,7 +17,7 @@ class HookPlayerPoints : HookAbstract() {
             return field
         }
 
-    private fun getPoints(player: OfflinePlayer): Int {
+    fun getPoints(player: OfflinePlayer): Int {
         return playerPointsAPI?.look(player.uniqueId) ?: -1
     }
 

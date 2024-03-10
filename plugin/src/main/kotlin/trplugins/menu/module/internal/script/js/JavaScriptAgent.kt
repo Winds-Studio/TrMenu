@@ -3,6 +3,7 @@ package trplugins.menu.module.internal.script.js
 import com.google.common.collect.Maps
 import org.bukkit.Bukkit
 import taboolib.common5.compileJS
+import trplugins.menu.module.internal.data.Metadata
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.util.EvalResult
 import java.util.function.Function
@@ -54,6 +55,8 @@ object JavaScriptAgent {
             it["session"] = session
             it["player"] = session.viewer
             it["sender"] = session.viewer
+            it["meta"] = Metadata.getMeta(session.viewer).data
+            it["config"] = session.menu?.conf
         }, ScriptContext.ENGINE_SCOPE)
         val setAttribute: (String, Function<Any, Any?>) -> Unit = { name, func ->
             context.setAttribute(name, func, ScriptContext.ENGINE_SCOPE)
