@@ -2,7 +2,7 @@ import io.izzel.taboolib.gradle.*
 
 plugins {
     java
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
+    id("org.jetbrains.kotlin.jvm") version "1.9.23"
     id("io.izzel.taboolib") version "2.0.9"
 }
 
