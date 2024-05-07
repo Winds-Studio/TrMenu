@@ -35,6 +35,7 @@ object ItemSource {
             "SXITEM", "SI" -> HookPlugin.getSXItem().getItem(id, session.placeholderPlayer)
             "MagicCosmeticsE","MAGICE"-> HookPlugin.getMagicCosmetics().getEquipped(id, session.placeholderPlayer)
             "MagicCosmeticsI","MAGICI"-> HookPlugin.getMagicCosmetics().getCosmeticItem(id)
+            "MMOITEMS" -> HookPlugin.getMMOItems().getItem(id)
             else -> CustomItemSourceEvent(name, id, session).also { it.call() }.source
         }
     }

@@ -82,6 +82,10 @@ object HookPlugin {
         return get(HookTriton::class.java)
     }
 
+    fun getMMOItems(): HookMMOItems {
+        return get(HookMMOItems::class.java)
+    }
+
     fun getNBTAPI(): HookNBTAPI {
         return get(HookNBTAPI::class.java)
     }
