@@ -19,7 +19,7 @@ jobs:
       - name: Download HibiscusMC-HMCCosmetics Jar
         uses: wei/wget@v1
         with:
-          args: -O https://repo.hibiscusmc.com/releases/com/hibiscusmc/HMCCosmetics/2.7.2/HMCCosmetics-2.7.2.jar
+          args: -P ./plugin/libs https://repo.hibiscusmc.com/releases/com/hibiscusmc/HMCCosmetics/2.7.2/HMCCosmetics-2.7.2.jar
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
