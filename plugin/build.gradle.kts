@@ -25,11 +25,12 @@ taboolib {
             name("EcoItems").with("bukkit").optional(true)
             name("MythicMobs").with("bukkit").optional(true)
             name("HMCCosmetics").with("bukkit").optional(true)
-            name("NBTAPI").with("bukkit").optional(false)
+            name("NBTAPI").with("bukkit").optional(true).loadbefore(true)
         }
     }
     relocate("trplugins.menu", group.toString())
     relocate("ink.ptms.um","${group}.um")
+    relocate("com.cryptomorin.xseries", "${group}.xseries")
 }
 
 repositories {
@@ -52,13 +53,18 @@ dependencies {
     taboo(project(":api:receptacle"))
     taboo(project(":api:action"))
     taboo("ink.ptms:um:1.0.6")
+    taboo("com.github.cryptomorin:XSeries:11.2.0")
 
     // Libraries
     compileOnly("org.apache.commons:commons-lang3:3.14.0")
 
     // Server Core
-    compileOnly("ink.ptms.core:v12002:12002-minimize:mapped")
-    compileOnly("ink.ptms.core:v12002:12002-minimize:universal")
+    compileOnly("ink.ptms.core:v12100:12100-minimize:mapped")
+    compileOnly("ink.ptms.core:v12100:12100-minimize:universal")
+    compileOnly("ink.ptms.core:v12006:12006-minimize:mapped")
+    compileOnly("ink.ptms.core:v12006:12006-minimize:universal")
+    compileOnly("ink.ptms.core:v12004:12004-minimize:mapped")
+    compileOnly("ink.ptms.core:v12004:12004-minimize:universal")
     compileOnly("ink.ptms.core:v11904:11904-minimize:mapped")
     compileOnly("ink.ptms.core:v11904:11904-minimize:universal")
     compileOnly("ink.ptms.core:v11701:11701-minimize:mapped")

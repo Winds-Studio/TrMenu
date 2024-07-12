@@ -3,6 +3,8 @@ dependencies {
     compileOnly("ink.ptms:nms-all:1.0.0")
     compileOnly("ink.ptms.core:v12002:12002-minimize:universal")
     compileOnly("ink.ptms.core:v12002:12002-minimize:mapped")
+    compileOnly("ink.ptms.core:v12100:12100-minimize:universal")
+    compileOnly("ink.ptms.core:v12100:12100-minimize:mapped")
     compileOnly("org.geysermc.floodgate:api:2.2.3-SNAPSHOT")
     compileOnly(fileTree("libs"))
 }

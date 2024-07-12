@@ -6,11 +6,11 @@ import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.DyeColor
 import org.bukkit.Material
+import org.bukkit.block.Banner
 import org.bukkit.block.banner.Pattern
 import org.bukkit.block.banner.PatternType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.PlayerInventory
-import org.bukkit.inventory.meta.BannerMeta
 import taboolib.common.platform.function.warning
 import taboolib.library.xseries.XMaterial
 import taboolib.module.nms.ItemTag
@@ -51,9 +51,9 @@ object ItemHelper {
                 if (type.size == 1) {
                     builder.finishing = {
                         try {
-                            (it.itemMeta as? BannerMeta)?.baseColor = DyeColor.valueOf(type[0].uppercase())
+                            (it.itemMeta as? Banner)?.baseColor = DyeColor.valueOf(type[0].uppercase())
                         } catch (e: Exception) {
-                            (it.itemMeta as? BannerMeta)?.baseColor = DyeColor.BLACK
+                            (it.itemMeta as? Banner)?.baseColor = DyeColor.BLACK
                         }
                     }
                 } else if (type.size == 2) {

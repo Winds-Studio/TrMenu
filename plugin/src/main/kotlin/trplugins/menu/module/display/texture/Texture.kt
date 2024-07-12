@@ -119,14 +119,14 @@ class Texture(
             var texture = raw
             val meta = mutableMapOf<TextureMeta, String>()
 
-            TextureMeta.values().forEach {
+            TextureMeta.entries.forEach {
                 it.regex.find(raw)?.groupValues?.get(1)?.also { value ->
                     meta[it] = value
                     texture = texture.replace(it.regex, "")
                 }
             }
 
-            TextureType.values().filter { it.group != -1 }.forEach {
+            TextureType.entries.filter { it.group != -1 }.forEach {
                 it.regex.find(texture)?.groupValues?.get(it.group)?.also { value ->
                     type = it
                     texture = value
@@ -155,9 +155,9 @@ class Texture(
                 }
             } catch (e: Throwable) {
                 runCatching {
-                    XMaterial.values().find { it.name.equals(id.toString(), true) }
-                        ?: XMaterial.values().find { it -> it.legacy.any { it == id.toString() } }
-                        ?: XMaterial.values().maxByOrNull { similarDegree(id.toString(), it.name) }
+                    XMaterial.entries.find { it.name.equals(id.toString(), true) }
+                        ?: XMaterial.entries.find { it -> it.legacy.any { it == id.toString() } }
+                        ?: XMaterial.entries.maxByOrNull { similarDegree(id.toString(), it.name) }
                 }.getOrNull()?.parseItem()
                     ?: FALL_BACK
             }
