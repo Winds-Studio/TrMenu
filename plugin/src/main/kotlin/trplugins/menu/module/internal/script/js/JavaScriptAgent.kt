@@ -6,6 +6,7 @@ import taboolib.common5.compileJS
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.module.internal.data.Metadata
 import trplugins.menu.module.internal.hook.impl.HookNBTAPI
+import trplugins.menu.module.internal.script.Assist
 import trplugins.menu.module.internal.script.Bindings
 import trplugins.menu.util.EvalResult
 import java.util.function.Function

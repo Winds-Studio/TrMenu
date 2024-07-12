@@ -87,7 +87,7 @@ object TrMenu : Plugin() {
         RegisterCommands.load()
         Bindings.load()
         Kether.isAllowToleranceParser = SETTINGS.getBoolean("Action.Kether.Allow-Tolerance-Parser", false)
-        Tell.use_component = SETTINGS.getBoolean("Action.Using-Component", true)
+        Tell.useComponent = SETTINGS.getBoolean("Action.Using-Component", true)
         PlatformProvider.compute()
         NMS.javaStaticInventory = SETTINGS.getBoolean("Options.Static-Inventory.Java", false)
         NMS.bedrockStaticInventory = SETTINGS.getBoolean("Options.Static-Inventory.Bedrock", false)

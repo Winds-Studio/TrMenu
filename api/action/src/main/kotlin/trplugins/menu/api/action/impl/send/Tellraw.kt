@@ -7,7 +7,7 @@ import trplugins.menu.api.action.ActionHandle
 import trplugins.menu.api.action.base.ActionBase
 import trplugins.menu.api.action.base.ActionContents
 import trplugins.menu.util.collections.Variables
-import trplugins.menu.util.jsonParser
+import trplugins.menu.util.parseJson
 
 /**
  * TrMenu
@@ -29,7 +29,7 @@ class Tellraw(handle: ActionHandle) : ActionBase(handle) {
     override fun readContents(contents: Any): ActionContents {
         val raw = contents.toString()
         val json: String
-        if (kotlin.runCatching { jsonParser.parse(raw) }.isSuccess) {
+        if (kotlin.runCatching { raw.parseJson() }.isSuccess) {
             json = raw
         } else {
             val tellraw = Components.empty()

@@ -17,11 +17,11 @@ class Tell(handle: ActionHandle) : ActionBase(handle) {
 
     override val regex = "tell|message|msg|talk".toRegex()
     companion object{
-        var use_component = true;
+        var useComponent = true;
     }
     override fun onExecute(contents: ActionContents, player: ProxyPlayer, placeholderPlayer: ProxyPlayer) {
         contents.stringContent().parseContentSplited(placeholderPlayer).forEach {
-            if (use_component) {
+            if (useComponent) {
                 it.component().buildColored().sendTo(player)
             } else {
                 player.sendMessage(it)

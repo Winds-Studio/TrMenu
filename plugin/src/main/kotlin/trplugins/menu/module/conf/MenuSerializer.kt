@@ -147,7 +147,7 @@ object MenuSerializer : ISerializer {
         val properties = Property.PROPERTIES.ofMap(conf,
             keyTransform = { key ->
                 val name = key.replace('-', '_')
-                InventoryView.Property.values().find { it.name.equals(name, ignoreCase = true) }?.id ?: -1
+                InventoryView.Property.entries.find { it.name.equals(name, ignoreCase = true) }?.id ?: -1
             },
             valueTransform = { value -> value.toString().toIntOrNull() }
         )
@@ -219,7 +219,7 @@ object MenuSerializer : ISerializer {
         val layout = Property.LAYOUT.ofLists(conf)
         val playerInventory = Property.LAYOUT_PLAYER_INVENTORY.ofLists(conf)
         val inventoryType = Property.INVENTORY_TYPE.ofString(conf, "CHEST")
-        val bukkitType = InventoryType.values().find { it.name.equals(inventoryType, true) } ?: InventoryType.CHEST
+        val bukkitType = InventoryType.entries.find { it.name.equals(inventoryType, true) } ?: InventoryType.CHEST
         val rows = Property.SIZE.ofInt(conf, 0).let {
             if (it > 6) return@let it / 9
             else it

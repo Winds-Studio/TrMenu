@@ -111,6 +111,7 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
     private fun initializationPackets() {
         if (viewer != null) {
             nmsProxy<NMS>().sendWindowsOpen(viewer!!, title = title, type = type)
+            nmsProxy<NMS>().sendWindowsSetSlot(viewer!!, windowId = 0, slot = 45)
             refresh()
         }
     }

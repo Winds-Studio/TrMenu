@@ -10,6 +10,5 @@ import com.google.gson.JsonParser
  * @author Score2
  * @since 2022/02/06 22:33
  */
-val jsonParser = JsonParser()
 
-fun String.parseJson(): JsonElement = jsonParser.parse(this)
+fun String.parseJson(): JsonElement = JsonParser.parseString(this)

@@ -25,11 +25,11 @@ taboolib {
             name("EcoItems").with("bukkit").optional(true)
             name("MythicMobs").with("bukkit").optional(true)
             name("HMCCosmetics").with("bukkit").optional(true)
-            name("NBTAPI").with("bukkit").optional(true).loadbefore(true)
+            name("NBTAPI").with("bukkit").optional(false)
         }
     }
-    relocate("trplugins.menu", group.toString().lowercase())
-    relocate("ink.ptms.um","${group.toString().lowercase()}.um")
+    relocate("trplugins.menu", group.toString())
+    relocate("ink.ptms.um","${group}.um")
 }
 
 repositories {

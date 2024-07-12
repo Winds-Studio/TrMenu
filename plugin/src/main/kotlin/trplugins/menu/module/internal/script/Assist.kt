@@ -1,4 +1,4 @@
-package trplugins.menu.module.internal.script.js
+package trplugins.menu.module.internal.script
 
 import me.clip.placeholderapi.PlaceholderAPI
 import org.apache.commons.lang3.math.NumberUtils
@@ -29,7 +29,7 @@ import trplugins.menu.util.Bungees
 import trplugins.menu.util.ClassUtils
 import trplugins.menu.util.bukkit.Heads
 import trplugins.menu.util.bukkit.ItemMatcher
-import java.util.TreeMap
+import java.util.*
 
 
 /**

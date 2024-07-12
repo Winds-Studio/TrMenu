@@ -87,7 +87,10 @@ class Layout(
             }
 
             submit(async = false) {
-                Metadata.getMeta(session.viewer)["slot"] = "${event.slot}"
+                Metadata.getMeta(session.viewer).let {
+                    it["click_type"] = event.receptacleClickType.name
+                    it["slot"] = "${event.slot}"
+                }
                 session.getIconProperty(event.slot)?.handleClick(event.receptacleClickType, session)
             }
         }

@@ -7,7 +7,7 @@ import taboolib.expansion.defaultJexlCompiler
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.module.internal.data.Metadata
 import trplugins.menu.module.internal.hook.impl.HookNBTAPI
-import trplugins.menu.module.internal.script.js.Assist
+import trplugins.menu.module.internal.script.Assist
 import trplugins.menu.util.EvalResult
 
 object JexlAgent {
