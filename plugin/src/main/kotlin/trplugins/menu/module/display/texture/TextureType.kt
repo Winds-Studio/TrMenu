@@ -56,7 +56,18 @@ enum class TextureType(val regex: Regex, val group: Int) {
      *
      * Will be parsed if there contains placeholders
      */
-    RAW;
+    RAW,
+
+
+    /**
+     * {identifier}:{parsedArgument}
+     *
+     *  e.g.
+     *  mod:pixelmon:aaa
+     *  mod:pvz:ccc
+     */
+
+    MOD("[<{]?mod[:=](.+)[>}]?", 1);
 
     constructor(regex: String = "", group: Int = -1) : this(regex.toRegex(), group)
 

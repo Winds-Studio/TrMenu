@@ -17,6 +17,7 @@ import trplugins.menu.module.internal.item.ItemSource
 import trplugins.menu.util.Regexs
 import trplugins.menu.util.bukkit.Heads
 import trplugins.menu.util.bukkit.ItemHelper
+import trplugins.menu.util.hybird.ModItemSource
 
 /**
  * @author Arasple
@@ -40,6 +41,7 @@ class Texture(
             TextureType.HEAD -> Heads.getHead(temp)
             TextureType.REPO -> ItemRepository.getItem(temp)
             TextureType.SOURCE -> ItemSource.fromSource(session, temp)
+            TextureType.MOD -> ModItemSource.getItem(temp)
             TextureType.RAW -> ItemHelper.fromJson(temp)
         }
 
