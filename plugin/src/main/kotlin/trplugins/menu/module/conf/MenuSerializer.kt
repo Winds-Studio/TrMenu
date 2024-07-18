@@ -336,8 +336,16 @@ object MenuSerializer : ISerializer {
             val lore = Property.ICON_DISPLAY_LORE.ofLists(display)
 
             // Meta
-            val amount = if (inherit.contains(Property.ICON_DISPLAY_AMOUNT)) def!!.display.meta.amount else Property.ICON_DISPLAY_AMOUNT.ofString(display, "1")
-            val shiny = if (inherit.contains(Property.ICON_DISPLAY_SHINY)) def!!.display.meta.shiny else Property.ICON_DISPLAY_SHINY.ofString(display, "false")
+            val amount =
+                if (inherit.contains(Property.ICON_DISPLAY_AMOUNT)) def!!.display.meta.amount else Property.ICON_DISPLAY_AMOUNT.ofString(
+                    display,
+                    "1"
+                )
+            val shiny =
+                if (inherit.contains(Property.ICON_DISPLAY_SHINY)) def!!.display.meta.shiny else Property.ICON_DISPLAY_SHINY.ofString(
+                    display,
+                    "false"
+                )
             val flags = if (inherit.contains(Property.ICON_DISPLAY_FLAGS)) {
                 def!!.display.meta.flags
             } else Property.ICON_DISPLAY_FLAGS.ofStringList(display).mapNotNull { flag ->
@@ -346,7 +354,10 @@ object MenuSerializer : ISerializer {
             val nbt = if (inherit.contains(Property.ICON_DISPLAY_NBT)) {
                 def!!.display.meta.nbt
             } else {
-                ItemTag().also { Property.ICON_DISPLAY_NBT.ofMap(display).forEach { (key, value) -> it[key] = ItemTagData.toNBT(value) } }
+                ItemTag().also {
+                    Property.ICON_DISPLAY_NBT.ofMap(display)
+                        .forEach { (key, value) -> it[key] = ItemTagData.toNBT(value) }
+                }
             }
 
             // only for the subIcon
@@ -363,13 +374,19 @@ object MenuSerializer : ISerializer {
                 if (clickTypes.isNotEmpty()) {
                     val reactions = Reactions.ofReaction(actionHandle, reaction)
                     if (!reactions.isEmpty()) {
-                        clickActions[clickTypes].also { clickActions[clickTypes] = it?.copyAndThen(reactions) ?: reactions }
+                        clickActions[clickTypes].also {
+                            clickActions[clickTypes] = it?.copyAndThen(reactions) ?: reactions
+                        }
                     }
                 }
             }
             if (def != null && !inherit.contains(Property.ACTIONS) && append.contains(Property.ACTIONS)) {
                 def.action.forEach { (clickTypes, reaction) ->
-                    clickActions[clickTypes].also { if (it == null) clickActions[clickTypes] = reaction else it.andThen(reaction) }
+                    clickActions[clickTypes].also {
+                        if (it == null) clickActions[clickTypes] = reaction else it.andThen(
+                            reaction
+                        )
+                    }
                 }
             }
 
