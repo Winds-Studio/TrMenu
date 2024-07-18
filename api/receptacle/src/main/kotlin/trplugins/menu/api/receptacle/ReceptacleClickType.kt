@@ -14,14 +14,6 @@ enum class ReceptacleClickType(
     private val action: Any? = null
 ) {
 
-    /*
-    2024/5/25 12:57 注:
-    暂时解决下1.12.2无SWAP_OFFHAND的报错，
-    我也是不想说了, 也懒得改了。现在用1.12.2用OFFHAND估计还是报错
-    这个枚举类本就不该和ClickType粘上点关系。
-    https://github.com/Dreeam-qwq/TrMenu/commit/4305477a1fb1f8fa4b59c741a3d035b2e4c8b4fb#diff-2f7d0736d6aa127ec345719795ff496cb5a439df73a835cefee5878e8d3c05d3
-    懒得动了, 就这样吧。
-     */
 
     ALL(-1, -1),
 

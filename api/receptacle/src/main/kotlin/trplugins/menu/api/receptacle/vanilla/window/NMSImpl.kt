@@ -201,7 +201,7 @@ class NMSImpl : NMS() {
     }
 
     private fun getInventoryProperty(type: InventoryType, id: Int): InventoryView.Property? {
-        return InventoryView.Property.values().find { (it.type == type || (it.type == InventoryType.FURNACE && type == InventoryType.BLAST_FURNACE)) && it.id == id }
+        return InventoryView.Property.entries.find { (it.type == type || (it.type == InventoryType.FURNACE && type == InventoryType.BLAST_FURNACE)) && it.id == id }
     }
 
 }

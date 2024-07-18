@@ -6,7 +6,6 @@ import taboolib.expansion.JexlCompiledScript
 import taboolib.expansion.defaultJexlCompiler
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.module.internal.data.Metadata
-import trplugins.menu.module.internal.hook.impl.HookNBTAPI
 import trplugins.menu.module.internal.script.Assist
 import trplugins.menu.util.EvalResult
 
@@ -19,7 +18,6 @@ object JexlAgent {
     private val bindings = mutableMapOf<String,Any?>(
         "bukkitServer" to Bukkit.getServer(),
         "utils" to Assist.INSTANCE,
-        "nbtapi" to HookNBTAPI,
     )
 
     fun putBinding(key: String, value: Any) {

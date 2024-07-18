@@ -11,12 +11,13 @@ import org.bukkit.block.banner.Pattern
 import org.bukkit.block.banner.PatternType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.PlayerInventory
+import org.bukkit.inventory.meta.BannerMeta
 import taboolib.common.platform.function.warning
 import taboolib.library.xseries.XMaterial
 import taboolib.module.nms.ItemTag
 import taboolib.platform.util.ItemBuilder
 import trplugins.menu.module.display.MenuSettings
-import trplugins.menu.module.internal.hook.impl.HookNBTAPI
+import trplugins.menu.module.internal.hook.HookPlugin
 import trplugins.menu.util.parseJson
 import kotlin.math.min
 
@@ -93,8 +94,8 @@ object ItemHelper {
     fun fromJson(json: String): ItemStack? {
         try {
             // 自动判别老式/新式 NBT 标签
-            if (!json.startsWith("{\"")) {
-                return HookNBTAPI.fromJson(json)
+            if (HookPlugin.getNBTAPI().isHooked && json.startsWith("{\"item\":")) {
+                return HookPlugin.getNBTAPI().fromJson(json)
             }
             val parse = JsonParser().parse(json)
             if (parse is JsonObject) {
@@ -115,9 +116,7 @@ object ItemHelper {
                     itemStack?.amount = it.asInt
                 }
                 val meta = parse["meta"]
-                val item = meta?.let { itemStack?.also { ItemTag.fromLegacyJson(it.toString()).saveTo(it) } } ?: itemStack
-                item?.let { warning("\"$json\" is deprecated. Please use ${HookNBTAPI.toJson(it)} instead.") }
-                return item
+                return meta?.let { itemStack?.also { ItemTag.fromLegacyJson(it.toString()).saveTo(it) } } ?: itemStack
             }
             return null
         } catch (t: Throwable) {

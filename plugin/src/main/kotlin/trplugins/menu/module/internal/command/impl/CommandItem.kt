@@ -98,7 +98,16 @@ object CommandItem : CommandExpression {
             return
         }
         val name = item.getName()
-        val stringJson: String = HookNBTAPI.toJson(item)
+        val stringJson: String = if (!HookPlugin.getNBTAPI().isHooked) {
+            val json = JsonObject()
+            json.addProperty("type", item.type.name)
+            json.addProperty("data", item.data!!.data)
+            json.addProperty("amount", item.amount)
+            json.add("meta", Gson().toJsonTree(item.getItemTag()))
+            json.toString()
+        } else {
+            HookPlugin.getNBTAPI().toJson(item)
+        }
         if (stringJson.length < 200) {
             player.sendLang("Command-Item-To-Json", stringJson)
         } else {

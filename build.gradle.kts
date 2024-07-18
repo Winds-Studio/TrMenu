@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     java
     kotlin("jvm") version "2.0.0"
-    id("io.izzel.taboolib") version "2.0.12"
+    id("io.izzel.taboolib") version "2.0.13"
 }
 
 // 这段。一言难尽，但我不想动 (依托)

@@ -1,16 +1,14 @@
 package trplugins.menu.module.internal.script.js
 
-import com.google.common.collect.Maps
 import org.bukkit.Bukkit
-import taboolib.common5.compileJS
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.module.internal.data.Metadata
-import trplugins.menu.module.internal.hook.impl.HookNBTAPI
+import trplugins.menu.module.internal.hook.impl.GraalJSAgent
+import trplugins.menu.module.internal.hook.impl.HookGraalJS
 import trplugins.menu.module.internal.script.Assist
 import trplugins.menu.module.internal.script.Bindings
 import trplugins.menu.util.EvalResult
 import java.util.function.Function
-import javax.script.CompiledScript
 import javax.script.ScriptContext
 import javax.script.SimpleBindings
 import javax.script.SimpleScriptContext
@@ -25,19 +23,16 @@ object JavaScriptAgent {
         "js: ",
         "$ ",
     )
-
+    private val graalvm = HookGraalJS().isHooked
 
     private val bindings = mutableMapOf(
         "bukkitServer" to Bukkit.getServer(),
         "utils" to Assist.INSTANCE,
-        "nbtapi" to HookNBTAPI,
     )
 
     fun putBinding(key: String, value: Any) {
         bindings[key] = value
     }
-
-    private val compiledScripts = Maps.newConcurrentMap<String, CompiledScript>()
 
     fun serialize(script: String): Pair<Boolean, String?> {
         prefixes.firstOrNull { script.startsWith(it) }?.let {
@@ -46,9 +41,13 @@ object JavaScriptAgent {
         return false to null
     }
 
-    fun preCompile(script: String): CompiledScript {
-        return compiledScripts.computeIfAbsent(script) {
-            script.compileJS()
+    fun preCompile(script: String) {
+        (Bindings.bootloaderCode + script).let {
+            if (graalvm) {
+                GraalJSAgent.preCompile(it)
+            } else {
+                NashornAgent.preCompile(it)
+            }
         }
     }
 
@@ -140,13 +139,11 @@ object JavaScriptAgent {
         )
 
         val rawCode = Bindings.bootloaderCode + script
-
-        val compiledScript =
-            if (cacheScript) preCompile(rawCode)
-            else rawCode.compileJS()
-
-        return EvalResult(compiledScript?.eval(context))
-
+        return if (graalvm) {
+            GraalJSAgent.eval(context, rawCode, cacheScript)
+        } else {
+            NashornAgent.eval(context, rawCode, cacheScript)
+        }
     }
 
 }
