@@ -3,6 +3,7 @@ package trplugins.menu.api.receptacle.vanilla.window
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.submit
+import taboolib.module.nms.MinecraftVersion
 import taboolib.module.nms.nmsProxy
 import trplugins.menu.api.receptacle.Receptacle
 import trplugins.menu.api.receptacle.ReceptacleInteractEvent
@@ -25,6 +26,13 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
     private val contents by lazy { arrayOfNulls<ItemStack?>(type.totalSize) }
 
     private var hidePlayerInventory = false
+    private val nms by lazy {
+        if (MinecraftVersion.majorLegacy >= 12100) {
+            NMSImpl12100()
+        } else {
+            nmsProxy<NMS>()
+        }
+    }
 
     private var stateId = 1
         get() {
@@ -47,7 +55,7 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
     override fun setElement(element: ItemStack?, slot: Int, display: Boolean) {
         contents[slot] = element
         if (!display || viewer == null) return
-        nmsProxy<NMS>().sendWindowsSetSlot(viewer!!, slot = slot, itemStack = element, stateId = stateId)
+        nms.sendWindowsSetSlot(viewer!!, slot = slot, itemStack = element, stateId = stateId)
     }
 
     override fun clear(display: Boolean) {
@@ -62,9 +70,9 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
             setupPlayerInventorySlots()
             runCatching {
                 if (slot >= 0) {
-                    nmsProxy<NMS>().sendWindowsSetSlot(viewer!!, slot = slot, itemStack = contents[slot], stateId = stateId)
+                    nms.sendWindowsSetSlot(viewer!!, slot = slot, itemStack = contents[slot], stateId = stateId)
                 } else {
-                    nmsProxy<NMS>().sendWindowsItems(viewer!!, items = contents)
+                    nms.sendWindowsItems(viewer!!, items = contents)
                 }
             }
         }
@@ -80,7 +88,7 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
     override fun close(sendPacket: Boolean) {
         if (viewer != null) {
             if (sendPacket) {
-                nmsProxy<NMS>().sendWindowsClose(viewer!!)
+                nms.sendWindowsClose(viewer!!)
             }
             onClose(viewer!!, this)
             viewer!!.setViewingReceptacle(null)
@@ -98,7 +106,7 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
 
     override fun property(id: Int, value: Int) {
         if (viewer != null) {
-            nmsProxy<NMS>().sendWindowsUpdateData(viewer!!, id = id, value = value)
+            nms.sendWindowsUpdateData(viewer!!, id = id, value = value)
         }
     }
 
@@ -110,8 +118,8 @@ open class WindowReceptacle(var type: WindowLayout, override var title: String =
 
     private fun initializationPackets() {
         if (viewer != null) {
-            nmsProxy<NMS>().sendWindowsOpen(viewer!!, title = title, type = type)
-            nmsProxy<NMS>().sendWindowsSetSlot(viewer!!, windowId = 0, slot = 45)
+            nms.sendWindowsOpen(viewer!!, title = title, type = type)
+            nms.sendWindowsSetSlot(viewer!!, windowId = 0, slot = 45)
             refresh()
         }
     }

@@ -1,20 +1,13 @@
 package trplugins.menu.util.bukkit
 
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.DyeColor
-import org.bukkit.Material
 import org.bukkit.block.Banner
 import org.bukkit.block.banner.Pattern
 import org.bukkit.block.banner.PatternType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.PlayerInventory
-import org.bukkit.inventory.meta.BannerMeta
-import taboolib.common.platform.function.warning
-import taboolib.library.xseries.XMaterial
-import taboolib.module.nms.ItemTag
 import taboolib.platform.util.ItemBuilder
 import trplugins.menu.module.display.MenuSettings
 import trplugins.menu.module.internal.hook.HookPlugin
@@ -92,35 +85,10 @@ object ItemHelper {
     }
 
     fun fromJson(json: String): ItemStack? {
-        try {
-            // 自动判别老式/新式 NBT 标签
-            if (HookPlugin.getNBTAPI().isHooked && json.startsWith("{\"item\":")) {
-                return HookPlugin.getNBTAPI().fromJson(json)
-            }
-            val parse = JsonParser().parse(json)
-            if (parse is JsonObject) {
-                val itemStack = parse["type"].let {
-                    it ?: return XMaterial.STONE.parseItem()
-                    try {
-                        XMaterial.valueOf(it.asString).parseItem()
-                    } catch (e: IllegalArgumentException) {
-                        ItemStack(Material.valueOf(it.asString))
-                    }
-                }
-                parse["data"].let {
-                    it ?: return@let
-                    itemStack?.durability = it.asShort
-                }
-                parse["amount"].let {
-                    it ?: return@let
-                    itemStack?.amount = it.asInt
-                }
-                val meta = parse["meta"]
-                return meta?.let { itemStack?.also { ItemTag.fromLegacyJson(it.toString()).saveTo(it) } } ?: itemStack
-            }
-            return null
+        return try {
+            HookPlugin.getNBTAPI().fromJson(json)
         } catch (t: Throwable) {
-            return null
+            null
         }
     }
 

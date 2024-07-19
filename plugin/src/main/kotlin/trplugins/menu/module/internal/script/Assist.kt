@@ -1,5 +1,6 @@
 package trplugins.menu.module.internal.script
 
+import de.tr7zw.nbtapi.NBT
 import me.clip.placeholderapi.PlaceholderAPI
 import org.apache.commons.lang3.math.NumberUtils
 import org.bukkit.Bukkit
@@ -13,10 +14,8 @@ import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.util.random
 import taboolib.library.xseries.XMaterial
 import taboolib.module.chat.Components
-import taboolib.module.nms.ItemTagData
-import taboolib.module.nms.getI18nName
-import taboolib.module.nms.getItemTag
 import taboolib.platform.compat.getBalance
+import taboolib.module.nms.getI18nName
 import taboolib.platform.util.ItemBuilder
 import taboolib.type.BukkitEquipment
 import trplugins.menu.TrMenu
@@ -360,14 +359,13 @@ class Assist {
      */
 
     fun getNBT(itemStack: ItemStack, string: String): String? {
-        val itemTag = itemStack.getItemTag()
-        return itemTag[string]?.asString()
+        return NBT.itemStackToNBT(itemStack).getString(string)
     }
 
     fun setNBT(itemStack: ItemStack, key: String, value: String): ItemStack {
-        val itemTag = itemStack.getItemTag()
-        itemTag[key] = ItemTagData(value)
-        return itemStack.also { itemTag.saveTo(it) }
+        val itemTag = NBT.itemStackToNBT(itemStack)
+        itemTag.setString(key, value)
+        return NBT.itemStackFromNBT(itemTag)!!
     }
 
     fun getLore(itemStack: ItemStack): MutableList<String> {
@@ -379,3 +377,5 @@ class Assist {
         return itemStack.itemMeta?.lore ?: mutableListOf("0")
     }
 }
+
+

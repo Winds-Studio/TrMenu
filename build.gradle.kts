@@ -35,7 +35,7 @@ subprojects {
             )
         }
         version {
-            taboolib = "6.1.2-test1"
+            taboolib = "6.1.2-beta10"
             coroutines = null
         }
     }

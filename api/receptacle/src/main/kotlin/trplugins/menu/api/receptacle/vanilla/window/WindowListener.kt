@@ -21,6 +21,14 @@ import trplugins.menu.api.receptacle.vanilla.window.NMS.Companion.useStaticInven
 @PlatformSide(Platform.BUKKIT)
 object WindowListener {
 
+    private val nms by lazy {
+        if (MinecraftVersion.majorLegacy >= 12100) {
+            NMSImpl12100()
+        } else {
+            nmsProxy<NMS>()
+        }
+    }
+
     @SubscribeEvent
     fun onPacket(e: PacketReceiveEvent) {
         if (e.player.useStaticInventory()) return
@@ -31,7 +39,7 @@ object WindowListener {
             } else {
                 e.packet.read<Int>("a")
             }
-            if (id == nmsProxy<NMS>().windowId(e.player)) {
+            if (id == nms.windowId(e.player)) {
                 e.isCancelled = true
                 val slot: Int
                 val clickType: ReceptacleClickType
@@ -57,7 +65,7 @@ object WindowListener {
             } else {
                 e.packet.read<Int>("id")
             }
-            if (id == nmsProxy<NMS>().windowId(e.player)) {
+            if (id == nms.windowId(e.player)) {
                 close(e.player, receptacle)
             }
             e.isCancelled = true
@@ -102,9 +110,9 @@ object WindowListener {
         receptacle.callEventClick(evt)
         if (evt.isCancelled) {
             if (clickType == ReceptacleClickType.OFFHAND) {
-                nmsProxy<NMS>().sendWindowsSetSlot(player, windowId = 0, slot = 45)
+                nms.sendWindowsSetSlot(player, windowId = 0, slot = 45)
             } else {
-                nmsProxy<NMS>().sendWindowsSetSlot(player, slot = -1, windowId = -1)
+                nms.sendWindowsSetSlot(player, slot = -1, windowId = -1)
             }
         }
     }
@@ -121,7 +129,7 @@ object WindowListener {
         submit(delay = 4, async = true) {
             val viewingReceptacle = player.getViewingReceptacle()
             if (viewingReceptacle == receptacle) {
-                nmsProxy<NMS>().sendWindowsClose(player)
+                nms.sendWindowsClose(player)
             }
         }
     }

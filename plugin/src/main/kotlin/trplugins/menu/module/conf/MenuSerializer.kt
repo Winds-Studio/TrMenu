@@ -1,5 +1,7 @@
 package trplugins.menu.module.conf
 
+import de.tr7zw.nbtapi.NBT
+import de.tr7zw.nbtapi.iface.ReadWriteNBT
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemFlag
@@ -12,8 +14,6 @@ import taboolib.module.configuration.Type
 import taboolib.module.lang.Language
 import taboolib.module.lang.TypeList
 import taboolib.module.lang.TypeText
-import taboolib.module.nms.ItemTag
-import taboolib.module.nms.ItemTagData
 import trplugins.menu.TrMenu.actionHandle
 import trplugins.menu.api.menu.ISerializer
 import trplugins.menu.api.reaction.Reactions
@@ -351,12 +351,18 @@ object MenuSerializer : ISerializer {
             } else Property.ICON_DISPLAY_FLAGS.ofStringList(display).mapNotNull { flag ->
                 ItemFlag.entries.find { it.name.equals(flag, true) }
             }.toTypedArray()
-            val nbt = if (inherit.contains(Property.ICON_DISPLAY_NBT)) {
+            val nbt:ReadWriteNBT? = if (inherit.contains(Property.ICON_DISPLAY_NBT)) {
                 def!!.display.meta.nbt
             } else {
-                ItemTag().also {
-                    Property.ICON_DISPLAY_NBT.ofMap(display)
-                        .forEach { (key, value) -> it[key] = ItemTagData.toNBT(value) }
+                NBT.createNBTObject().also { nbt ->
+                    Property.ICON_DISPLAY_NBT.ofMap(display).forEach { (key, value) ->
+                        when (value) {
+                            is Double -> nbt.setDouble(key, value)
+                            is Int -> nbt.setInteger(key, value)
+                            is String -> nbt.setString(key, value)
+                            is Boolean -> nbt.setBoolean(key, value)
+                        }
+                    }
                 }
             }
 

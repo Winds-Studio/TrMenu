@@ -1,7 +1,5 @@
 package trplugins.menu.module.internal.command.impl
 
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -12,14 +10,12 @@ import taboolib.common.platform.function.submit
 import taboolib.library.xseries.XSound
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
-import taboolib.module.nms.getItemTag
-import taboolib.module.nms.getName
 import taboolib.platform.util.isAir
 import taboolib.platform.util.sendLang
+import taboolib.module.nms.getName
 import taboolib.type.BukkitEquipment
 import trplugins.menu.module.internal.command.CommandExpression
 import trplugins.menu.module.internal.hook.HookPlugin
-import trplugins.menu.module.internal.hook.impl.HookNBTAPI
 import trplugins.menu.module.internal.item.ItemRepository
 import trplugins.menu.util.bukkit.ItemHelper
 
@@ -98,16 +94,8 @@ object CommandItem : CommandExpression {
             return
         }
         val name = item.getName()
-        val stringJson: String = if (!HookPlugin.getNBTAPI().isHooked) {
-            val json = JsonObject()
-            json.addProperty("type", item.type.name)
-            json.addProperty("data", item.data!!.data)
-            json.addProperty("amount", item.amount)
-            json.add("meta", Gson().toJsonTree(item.getItemTag()))
-            json.toString()
-        } else {
-            HookPlugin.getNBTAPI().toJson(item)
-        }
+        val stringJson: String = HookPlugin.getNBTAPI().toJson(item)
+
         if (stringJson.length < 200) {
             player.sendLang("Command-Item-To-Json", stringJson)
         } else {
