@@ -1,23 +1,13 @@
 package trplugins.menu.util.bukkit
 
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.mojang.authlib.GameProfile
-import com.mojang.authlib.properties.Property
-import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
-import taboolib.common.platform.function.console
-import taboolib.common.platform.function.submit
 import taboolib.library.reflex.Reflex.Companion.getProperty
-import taboolib.library.reflex.Reflex.Companion.invokeMethod
-import taboolib.library.reflex.Reflex.Companion.setProperty
 import taboolib.library.xseries.XMaterial
-import taboolib.library.xseries.XSkull
+import taboolib.library.xseries.profiles.builder.XSkull
 import taboolib.module.nms.MinecraftVersion
 import trplugins.menu.module.internal.hook.HookPlugin
-import java.net.URL
-import java.util.*
 
 /**
  * @author Arasple
@@ -40,7 +30,7 @@ object Heads {
 
     private fun getCustomHead(id: String): ItemStack = CACHED_SKULLS.computeIfAbsent(id) {
         DEFAULT_HEAD.clone().apply {
-            itemMeta = itemMeta?.let { m -> XSkull.applySkin(m, id) }
+            itemMeta = itemMeta?.let { m -> XSkull.of(m).apply() }
         }
     }.clone()
 

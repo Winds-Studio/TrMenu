@@ -1,10 +1,8 @@
 package trplugins.menu.util
 
-import taboolib.common.io.getInstance
 import taboolib.common.io.runningClasses
 import taboolib.library.reflex.Reflex.Companion.getProperty
 import taboolib.module.configuration.Configuration
-import java.lang.reflect.Modifier
 
 /**
  * @author Arasple
@@ -44,7 +42,6 @@ inline fun <reified T> fromClassesCollect(`super`: Class<T>) = mutableListOf<T>(
         }.getOrNull() ?: return@forEach)
     }
 }
-*/
 
 fun <T> List<Class<*>>.fromClassesCollect(`super`: Class<T>, newInstance: Boolean = false, deep: Boolean = false) =
     toTypedArray().fromClassesCollect(`super`, newInstance, deep)
@@ -70,7 +67,7 @@ fun <T> Class<*>.fromClassCollect(`super`: Class<T>, newInstance: Boolean = fals
             this.classes.fromClassesCollect(`super`, deep).forEach { list.add(it) }
         }
     }
-
+*/
 
 
 @Suppress("UNCHECKED_CAST")

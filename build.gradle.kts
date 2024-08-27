@@ -1,4 +1,3 @@
-import io.izzel.taboolib.gradle.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -27,15 +26,46 @@ subprojects {
 
     taboolib {
         env {
+            install("basic-configuration")
+
             install(
-                UNIVERSAL, DATABASE, KETHER, METRICS, NMS, NMS_UTIL, UI,
-                CHAT,
-                EXPANSION_REDIS, EXPANSION_JAVASCRIPT,EXPANSION_JEXL, EXPANSION_PLAYER_DATABASE, EXPANSION_PLAYER_FAKE_OP,
-                BUKKIT_ALL,EXPANSION_FOLIA
+                "bukkit-hook",
+                "bukkit-util",
+                "bukkit-ui",
+                "bukkit-xseries",
+                "bukkit-xseries-item",
+                "bukkit-xseries-skull"
             )
+
+            install(
+                "database-sql"
+            )
+
+            install(
+                "minecraft-chat",
+                "minecraft-i18n",
+                "minecraft-kether",
+                "minecraft-metrics"
+            )
+
+            install(
+                "nms",
+                "nms-util-stable",
+                "nms-util-tag",
+                "nms-util-unstable"
+            )
+
+            install(
+                "platform-bukkit",
+                "platform-bukkit-impl"
+            )
+
+            install("script-javascript")
+
+            repoTabooLib = "http://mcitd.cn:8081/repository/releases/" // TODO
         }
         version {
-            taboolib = "6.1.2-beta10"
+            taboolib = "6.2.0-beta4-dev"
             coroutines = null
         }
     }
@@ -43,9 +73,8 @@ subprojects {
     repositories {
         mavenCentral()
         maven("https://hub.spigotmc.org/nexus/content/groups/public/")
-        maven("http://sacredcraft.cn:8081/repository/releases") { isAllowInsecureProtocol = true }
+        maven("http://mcitd.cn:8081/repository/releases/") { isAllowInsecureProtocol = true } // TODO
         maven("https://repo.codemc.io/repository/nms/")
-        maven("https://hub.spigotmc.org/nexus/content/groups/public/")
         maven("https://repo.opencollab.dev/main/")
     }
 
@@ -60,7 +89,7 @@ subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = "1.8"
-            freeCompilerArgs += listOf("-Xskip-prerelease-check","-Xallow-unstable-dependencies")
+            freeCompilerArgs += listOf("-Xskip-prerelease-check", "-Xallow-unstable-dependencies")
         }
     }
 

@@ -25,10 +25,10 @@ object HookPlugin {
     private val registry by lazy {
         mutableListOf<HookAbstract>().also {
             runningClasses.forEach { `class` ->
-                if (Modifier.isAbstract(`class`.modifiers)) return@forEach
-                if (`class`.superclass != HookAbstract::class.java) return@forEach
+                if (Modifier.isAbstract(`class`.javaClass.modifiers)) return@forEach
+                if (`class`.javaClass.superclass != HookAbstract::class.java) return@forEach
 
-                it.add(`class`.asSubclass(HookAbstract::class.java).getConstructor().newInstance())
+                it.add(`class`.javaClass.asSubclass(HookAbstract::class.java).getConstructor().newInstance())
             }
         }.toTypedArray()
     }

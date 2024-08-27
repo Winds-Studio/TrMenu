@@ -11,7 +11,7 @@ import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XSound
 import taboolib.module.configuration.Configuration
 import taboolib.module.ui.openMenu
-import taboolib.module.ui.type.Basic
+import taboolib.module.ui.type.Chest
 import taboolib.platform.util.sendLang
 import trplugins.menu.module.display.layout.MenuLayout
 import trplugins.menu.module.display.texture.Texture
@@ -35,7 +35,7 @@ object CommandTemplate : CommandExpression {
             execute<Player> { player, _, argument ->
                 val rows = (if (argument.isNotEmpty()) NumberUtils.toInt(argument, 5) else 3).coerceAtMost(6)
 
-                player.openMenu<Basic>("Template#$rows") {
+                player.openMenu<Chest>("Template#$rows") {
                     rows(rows)
                     handLocked(false)
                     onClose { e ->
