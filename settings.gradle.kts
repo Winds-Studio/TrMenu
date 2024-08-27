@@ -8,5 +8,5 @@ include(
     ":api:action",
 
     ":module:database",
-    ":module:migrate",
+    ":module:migrate"
 )

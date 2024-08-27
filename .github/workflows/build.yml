@@ -20,8 +20,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Build with Gradle * 2
-        run: ./gradlew build
 
       - name: Upload TrMenu
         if: "github.event_name != 'pull_request'"

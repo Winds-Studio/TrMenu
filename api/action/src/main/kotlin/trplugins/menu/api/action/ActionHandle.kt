@@ -4,6 +4,7 @@ import taboolib.common.io.runningClasses
 import taboolib.common.platform.ProxyPlayer
 import taboolib.common.platform.function.submit
 import taboolib.library.reflex.Reflex.Companion.invokeConstructor
+import taboolib.library.reflex.ReflexClass
 import trplugins.menu.api.action.base.ActionBase
 import trplugins.menu.api.action.base.ActionEntry
 import trplugins.menu.api.action.impl.logic.Break
@@ -33,12 +34,12 @@ class ActionHandle(
         register(*runningClasses.toTypedArray())
     }
 
-    private fun register(vararg classes: Class<*>) {
+    private fun register(vararg classes: ReflexClass) {
         classes.forEach { `class` ->
-            if (Modifier.isAbstract(`class`.modifiers)) return@forEach
-            if (`class`.superclass != ActionBase::class.java) return@forEach
+            if (Modifier.isAbstract(`class`.javaClass.modifiers)) return@forEach
+            if (`class`.javaClass.superclass != ActionBase::class.java) return@forEach
 
-            register(`class`.asSubclass(ActionBase::class.java).invokeConstructor(this))
+            register(`class`.javaClass.asSubclass(ActionBase::class.java).invokeConstructor(this))
         }
     }
 

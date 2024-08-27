@@ -36,14 +36,14 @@ taboolib {
 
 repositories {
     mavenCentral()
-    maven("https://repo.tabooproject.org/repository/releases")
+    maven("https://repo.tabooproject.org/repository/releases/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.codemc.org/repository/maven-public")
+    maven("https://repo.codemc.org/repository/maven-public/")
     maven("https://repo.rosewooddev.io/repository/public/")
     maven("https://repo.opencollab.dev/main/")
-    maven("https://repo.oraxen.com/releases")
+    maven("https://repo.oraxen.com/releases/")
     maven("https://nexus.phoenixdevt.fr/repository/maven-public/")
-    maven("https://jitpack.io")
+    maven("https://jitpack.io/")
     maven("https://r.irepo.space/maven/")
     maven("https://repo.auxilor.io/repository/maven-public/")
     maven("https://repo.hibiscusmc.com/releases/")

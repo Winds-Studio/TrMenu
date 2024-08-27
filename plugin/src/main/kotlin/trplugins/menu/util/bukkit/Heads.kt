@@ -1,6 +1,5 @@
 package trplugins.menu.util.bukkit
 
-
 import com.cryptomorin.xseries.XMaterial
 import com.cryptomorin.xseries.profiles.builder.XSkull
 import com.cryptomorin.xseries.profiles.objects.Profileable
