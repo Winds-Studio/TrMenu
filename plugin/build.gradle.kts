@@ -55,7 +55,7 @@ dependencies {
     taboo("ink.ptms:um:1.0.8")
 
     // Libraries
-    compileOnly("org.apache.commons:commons-lang3:3.16.0")
+    compileOnly("org.apache.commons:commons-lang3:3.17.0")
 
     // Server Core
     compileOnly("ink.ptms.core:v12002:12002-minimize:mapped")
