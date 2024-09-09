@@ -13,6 +13,7 @@ import trplugins.menu.module.internal.script.js.JavaScriptAgent
  * @author lilingfengdev
  * @date 2024/7/5 15:08
  */
+// TODO - Dreeam: 为什么呢
 class HookMythicMobs : HookAbstract() {
 
     private val empty = buildItem(XMaterial.BEDROCK) { name = "UNHOOKED_${super.name.uppercase()}" }

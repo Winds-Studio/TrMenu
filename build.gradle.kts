@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
@@ -29,16 +29,18 @@ subprojects {
             install("basic-configuration")
 
             install(
+                "bukkit-fake-op",
                 "bukkit-hook",
-                "bukkit-util",
+                "bukkit-nms",
+                "bukkit-nms-stable",
                 "bukkit-ui",
+                "bukkit-util",
                 "bukkit-xseries",
-                "bukkit-xseries-item",
-                "bukkit-xseries-skull"
+                "bukkit-xseries-item"
             )
 
             install(
-                "database-sql"
+                "database"
             )
 
             install(
@@ -49,23 +51,19 @@ subprojects {
             )
 
             install(
-                "nms",
-                "nms-util-stable",
-                "nms-util-tag",
-                "nms-util-unstable"
-            )
-
-            install(
                 "platform-bukkit",
                 "platform-bukkit-impl"
             )
 
-            install("script-javascript")
+            install(
+                "script-javascript",
+                "script-jexl"
+            )
 
-            repoTabooLib = "http://mcitd.cn:8081/repository/releases/" // TODO
+            repoTabooLib = "http://sacredcraft.cn:8081/repository/releases/"
         }
         version {
-            taboolib = "6.2.0-beta4-dev"
+            taboolib = "6.2.0-beta1-dev"
             coroutines = null
         }
     }
@@ -73,7 +71,7 @@ subprojects {
     repositories {
         mavenCentral()
         maven("https://hub.spigotmc.org/nexus/content/groups/public/")
-        maven("http://mcitd.cn:8081/repository/releases/") { isAllowInsecureProtocol = true } // TODO
+        maven("http://sacredcraft.cn:8081/repository/releases？") { isAllowInsecureProtocol = true }
         maven("https://repo.codemc.io/repository/nms/")
         maven("https://repo.opencollab.dev/main/")
     }
@@ -86,10 +84,15 @@ subprojects {
         options.encoding = "UTF-8"
     }
 
-    tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = "1.8"
-            freeCompilerArgs += listOf("-Xskip-prerelease-check", "-Xallow-unstable-dependencies")
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_1_8
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-Xskip-prerelease-check",
+                    "-Xallow-unstable-dependencies"
+                )
+            )
         }
     }
 
@@ -98,5 +101,4 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
 }

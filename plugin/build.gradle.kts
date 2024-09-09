@@ -53,7 +53,7 @@ dependencies {
     taboo(project(":common"))
     taboo(project(":api:receptacle"))
     taboo(project(":api:action"))
-    taboo("ink.ptms:um:1.0.6")
+    taboo("ink.ptms:um:1.0.9")
     taboo("com.github.cryptomorin:XSeries:11.2.0.1")
 
     // Libraries

@@ -10,6 +10,7 @@ import trplugins.menu.module.internal.hook.HookAbstract
  * @author lilingfengdev
  * @date 2024/7/3 10:30
  */
+// TODO - Dreeam: 为什么呢
 class HookEcoItems : HookAbstract() {
 
     private val empty = buildItem(XMaterial.BEDROCK) { name = "UNHOOKED_${super.name.uppercase()}" }

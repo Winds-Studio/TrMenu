@@ -71,7 +71,7 @@ class ItemMatcher(private val matcher: Set<Match>) {
                 false
             }
         else
-            player.inventory.takeItem(match.amount.second, match.itemsMatcher)
+            player.inventory.takeItem(match.amount.second, mutableListOf(), match.itemsMatcher)
     }
 
     fun buildItem(): List<ItemStack> {
