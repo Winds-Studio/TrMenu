@@ -3,8 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "2.0.0"
-    id("io.izzel.taboolib") version "2.0.13"
+    idea
+    kotlin("jvm") version "2.0.20"
+    id("io.izzel.taboolib") version "2.0.19"
 }
 
 // 这段。一言难尽，但我不想动 (依托)
@@ -22,20 +23,43 @@ tasks.build {
 subprojects {
 
     apply<JavaPlugin>()
+    apply(plugin = "idea")
     apply(plugin = "io.izzel.taboolib")
     apply(plugin = "org.jetbrains.kotlin.jvm")
+
+    idea {
+        module {
+            isDownloadJavadoc = true
+            isDownloadSources = true
+        }
+    }
 
     taboolib {
         env {
             install(
-                UNIVERSAL, DATABASE, KETHER, METRICS, NMS, NMS_UTIL, UI,
-                CHAT,
-                EXPANSION_REDIS, EXPANSION_JAVASCRIPT,EXPANSION_JEXL, EXPANSION_PLAYER_DATABASE, EXPANSION_PLAYER_FAKE_OP,
-                BUKKIT_ALL,EXPANSION_FOLIA
+                Basic,
+                Bukkit,
+                BukkitHook,
+                BukkitNMS,
+                BukkitNMSUtil,
+                BukkitUI,
+                BukkitUtil,
+                CommandHelper,
+                Database,
+                DatabaseAlkaidRedis,
+                BukkitFakeOp,
+                DatabasePlayer,
+                I18n,
+                JavaScript,
+                Jexl,
+                Kether,
+                Metrics,
+                MinecraftChat,
+                XSeries
             )
         }
         version {
-            taboolib = "6.1.2-beta10"
+            taboolib = "6.2.0-beta18"
             coroutines = null
         }
     }

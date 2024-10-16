@@ -25,7 +25,7 @@ object WindowListener {
     fun onPacket(e: PacketReceiveEvent) {
         if (e.player.useStaticInventory()) return
         val receptacle = e.player.getViewingReceptacle() as? WindowReceptacle ?: return
-        if (e.packet.name == "PacketPlayInWindowClick") {
+        if (e.packet.name == "PacketPlayInWindowClick" || e.packet.name == "ServerboundContainerClickPacket") {
             val id = if (MinecraftVersion.isUniversal) {
                 e.packet.read<Int>("containerId")
             } else {
@@ -51,7 +51,7 @@ object WindowListener {
                 }
                 clicked(e.player, receptacle, clickType, slot)
             }
-        } else if (e.packet.name == "PacketPlayInCloseWindow") {
+        } else if (e.packet.name == "PacketPlayInCloseWindow" || e.packet.name == "ServerboundContainerClosePacket") {
             val id = if (MinecraftVersion.isUniversal) {
                 e.packet.read<Int>("containerId")
             } else {
