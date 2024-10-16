@@ -71,6 +71,7 @@ class Menu(
         if (session.menu == this) {
             return page(viewer, determinedPage)
         } else if (session.menu != null) {
+            session.receptacle?.close(true)
             session.shut()
         }
 
