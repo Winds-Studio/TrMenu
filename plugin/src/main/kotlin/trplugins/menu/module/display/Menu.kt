@@ -10,6 +10,7 @@ import taboolib.module.lang.Type
 import taboolib.platform.util.cancelNextChat
 import trplugins.menu.api.event.MenuOpenEvent
 import trplugins.menu.api.event.MenuPageChangeEvent
+import trplugins.menu.api.receptacle.provider.PlatformProvider
 import trplugins.menu.api.receptacle.vanilla.window.WindowReceptacle
 import trplugins.menu.module.display.icon.Icon
 import trplugins.menu.module.display.layout.MenuLayout
@@ -71,7 +72,9 @@ class Menu(
         if (session.menu == this) {
             return page(viewer, determinedPage)
         } else if (session.menu != null) {
-            session.receptacle?.close(true)
+            if (PlatformProvider.isBedrockPlayer(viewer)) {
+                session.receptacle?.close(true)
+            }
             session.shut()
         }
 
