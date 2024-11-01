@@ -114,4 +114,8 @@ object HookPlugin {
         return get(HookMythicMobs::class.java)
     }
 
+    fun getAzureFlow(): HookAzureFlow {
+        return get(HookAzureFlow::class.java)
+    }
+
 }
