@@ -2,6 +2,7 @@ package trplugins.menu.module.display.item
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import taboolib.library.xseries.XMaterial
 import taboolib.platform.util.buildItem
 import taboolib.platform.util.isAir
 import trplugins.menu.api.menu.IItem
@@ -25,7 +26,14 @@ open class Item(
 
     val loreI18n = HashMap<String, CycleList<Lore>>()
 
-    internal val cache = mutableMapOf<Int, ItemStack>()
+    internal val cache = object: HashMap<Int, ItemStack>() {
+        override fun put(key: Int, value: ItemStack): ItemStack? {
+            if (value.type == XMaterial.PLAYER_HEAD.parseMaterial()) {
+                return super.put(key, value.clone())
+            }
+            return super.put(key, value)
+        }
+    }
 
     fun addI18nName(locale: String, name: CycleList<String>) {
         nameI18n[locale] = name

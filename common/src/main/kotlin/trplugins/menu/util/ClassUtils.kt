@@ -1,5 +1,8 @@
 package trplugins.menu.util
 
+import taboolib.common.io.runningClasses
+import java.util.function.Consumer
+
 object ClassUtils {
     @JvmStatic
     val staticClass: Class<*> by lazy {
@@ -15,6 +18,16 @@ object ClassUtils {
             staticClass.getMethod("forClass", Class::class.java).invoke(null, Class.forName(className))
         } catch (e: Exception) {
             null
+        }
+    }
+
+    @JvmStatic
+    fun <T> subClasses(`super`: Class<T>, consumer: Consumer<Class<out T>>) {
+        runningClasses.forEach { `class` ->
+            if (`class`.structure.isAbstract) return@forEach
+            if (`class`.structure.superclass?.name != `super`.name) return@forEach
+
+            consumer.accept(`class`.structure.owner.instance!!.asSubclass(`super`))
         }
     }
 }

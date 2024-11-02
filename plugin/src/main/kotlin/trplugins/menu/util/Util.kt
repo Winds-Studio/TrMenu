@@ -1,6 +1,5 @@
 package trplugins.menu.util
 
-import taboolib.common.io.getInstance
 import taboolib.common.io.runningClasses
 import taboolib.library.reflex.Reflex.Companion.getProperty
 import taboolib.module.configuration.Configuration
@@ -45,32 +44,6 @@ inline fun <reified T> fromClassesCollect(`super`: Class<T>) = mutableListOf<T>(
     }
 }
 */
-
-fun <T> List<Class<*>>.fromClassesCollect(`super`: Class<T>, newInstance: Boolean = false, deep: Boolean = false) =
-    toTypedArray().fromClassesCollect(`super`, newInstance, deep)
-
-fun <T> Array<Class<*>>.fromClassesCollect(`super`: Class<T>, newInstance: Boolean = false, deep: Boolean = false): MutableList<T> =
-    mutableListOf<T>().also { list ->
-        this.forEach { `class` ->
-            `class`.fromClassCollect(`super`, newInstance, deep).forEach { list.add(it) }
-        }
-    }
-
-@Suppress("UNCHECKED_CAST")
-fun <T> Class<*>.fromClassCollect(`super`: Class<T>, newInstance: Boolean = false, deep: Boolean = false): MutableList<T> =
-    mutableListOf<T>().also { list ->
-        if (Modifier.isAbstract(this.modifiers)) return@also
-        runCatching {
-            getInstance(newInstance)!!.get() as T
-        }.getOrNull().also {
-            list.add(it ?: return@also)
-        }
-
-        if (deep) {
-            this.classes.fromClassesCollect(`super`, deep).forEach { list.add(it) }
-        }
-    }
-
 
 
 @Suppress("UNCHECKED_CAST")
