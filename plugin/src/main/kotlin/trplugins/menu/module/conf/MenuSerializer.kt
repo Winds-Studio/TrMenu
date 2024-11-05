@@ -264,7 +264,7 @@ object MenuSerializer : ISerializer {
                 return@let Configuration.loadFromString(it.saveToString().split("\n").joinToString("\n") {
 //                    VariableReader("@", "@")
                     it.parseIconId(id)
-                }, conf.type)
+                }, conf.type, concurrent = SETTINGS.getBoolean("Options.Load-Menu-Concurrent"))
             }
 
             // i18n

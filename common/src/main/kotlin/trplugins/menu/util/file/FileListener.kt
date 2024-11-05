@@ -2,6 +2,7 @@ package trplugins.menu.util.file
 
 import taboolib.common5.FileWatcher
 import java.io.File
+import java.util.function.Consumer
 
 
 /**
@@ -12,11 +13,11 @@ object FileListener {
 
     private val listening = mutableSetOf<File>()
 
-    fun isListening(file: File): Boolean {
-        return watcher.hasListener(file)
-    }
+//    fun isListening(file: File): Boolean {
+//        return watcher.hasListener(file)
+//    }
 
-    fun listener(file: File, runnable: () -> Unit) {
+    fun listener(file: File, runnable: File.() -> Unit) {
         watcher.addSimpleListener(file, runnable)
         listening.add(file)
     }
@@ -37,10 +38,10 @@ object FileListener {
     }
 
 //    @TFunction.Cancel
-    fun uninstall() {
-        watcher.unregisterAll()
-    }
+//    fun uninstall() {
+//        watcher.unregisterAll()
+//    }
 
-    val watcher = FileWatcher()
+    val watcher = FileWatcher(100)
 
 }

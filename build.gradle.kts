@@ -46,7 +46,7 @@ subprojects {
                 BukkitUtil,
                 CommandHelper,
                 Database,
-                DatabaseAlkaidRedis,
+                AlkaidRedis,
                 BukkitFakeOp,
                 DatabasePlayer,
                 I18n,
@@ -59,7 +59,8 @@ subprojects {
             )
         }
         version {
-            taboolib = "6.2.0-beta18"
+//            taboolib = "6.2.0-beta18"
+            taboolib = "6.2.0-beta33"
             coroutines = null
         }
     }
