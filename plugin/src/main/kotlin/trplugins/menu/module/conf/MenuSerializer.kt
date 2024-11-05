@@ -69,7 +69,7 @@ object MenuSerializer : ISerializer {
         // 菜单类型
         val type = Type.entries.find { it -> it.suffixes.any { file.extension.equals(it, true) } }!!
         // 加载菜单配置
-        val conf = Configuration.loadFromFile(file, type, concurrent = SETTINGS.getBoolean("Options.Load-Menu-Concurrent"))
+        val conf = Configuration.loadFromFile(file, type, concurrent = SETTINGS.getBoolean("Options.Load-Menu-Concurrent", true))
 
         val langKey = Property.LANG.getKey(conf)
         val languages: Map<String, ConfigurationSection> = when (val section = conf.getConfigurationSection(langKey)) {
@@ -264,7 +264,7 @@ object MenuSerializer : ISerializer {
                 return@let Configuration.loadFromString(it.saveToString().split("\n").joinToString("\n") {
 //                    VariableReader("@", "@")
                     it.parseIconId(id)
-                }, conf.type, concurrent = SETTINGS.getBoolean("Options.Load-Menu-Concurrent"))
+                }, conf.type, concurrent = SETTINGS.getBoolean("Options.Load-Menu-Concurrent", true))
             }
 
             // i18n
