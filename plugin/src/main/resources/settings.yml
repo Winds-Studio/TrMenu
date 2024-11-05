@@ -3,6 +3,9 @@ Options:
   Running-Performance: Normal
   Multi-Thread: true
   Async-Load-Menus: true
+  # 是否启用并发加载菜单
+  # 启用后会导致多级捕获器顺序错乱
+  Load-Menu-Concurrent: true
   Static-Inventory:
     Java: false
     Bedrock: false
