@@ -1,6 +1,5 @@
 package trplugins.menu.api.action
 
-import taboolib.common.io.runningClasses
 import taboolib.common.platform.ProxyPlayer
 import taboolib.common.platform.function.submit
 import taboolib.library.reflex.Reflex.Companion.invokeConstructor
@@ -8,8 +7,8 @@ import trplugins.menu.api.action.base.ActionBase
 import trplugins.menu.api.action.base.ActionEntry
 import trplugins.menu.api.action.impl.logic.Break
 import trplugins.menu.api.action.impl.logic.Delay
+import trplugins.menu.util.ClassUtils
 import trplugins.menu.util.EvalResult
-import java.lang.reflect.Modifier
 import java.util.function.BiFunction
 
 /**
@@ -30,15 +29,8 @@ class ActionHandle(
     private val registries = mutableSetOf<ActionBase>()
 
     init {
-        register(*runningClasses.toTypedArray())
-    }
-
-    private fun register(vararg classes: Class<*>) {
-        classes.forEach { `class` ->
-            if (Modifier.isAbstract(`class`.modifiers)) return@forEach
-            if (`class`.superclass != ActionBase::class.java) return@forEach
-
-            register(`class`.asSubclass(ActionBase::class.java).invokeConstructor(this))
+        ClassUtils.subClasses(ActionBase::class.java) { action ->
+            register(action.invokeConstructor(this))
         }
     }
 
