@@ -1,12 +1,11 @@
 package trplugins.menu.module.internal.hook
 
 import taboolib.common.LifeCycle
-import taboolib.common.io.runningClasses
 import taboolib.common.platform.SkipTo
 import taboolib.common.platform.function.console
 import taboolib.module.lang.sendLang
 import trplugins.menu.module.internal.hook.impl.*
-import java.lang.reflect.Modifier
+import trplugins.menu.util.ClassUtils
 import kotlin.reflect.KClass
 
 /**
@@ -24,11 +23,8 @@ object HookPlugin {
 
     private val registry by lazy {
         mutableListOf<HookAbstract>().also {
-            runningClasses.forEach { `class` ->
-                if (Modifier.isAbstract(`class`.modifiers)) return@forEach
-                if (`class`.superclass != HookAbstract::class.java) return@forEach
-
-                it.add(`class`.asSubclass(HookAbstract::class.java).getConstructor().newInstance())
+            ClassUtils.subClasses(HookAbstract::class.java) { hook ->
+                it.add(hook.getConstructor().newInstance())
             }
         }.toTypedArray()
     }
