@@ -6,7 +6,7 @@ object Bindings {
     var exportHook = true;
     var bootloaderCode="";
     fun load() {
-        val bindings = TrMenu.SETTINGS.getConfigurationSection("Script")
+        val bindings = TrMenu.SETTINGS.getConfigurationSection("Scripts")
         exportHook = bindings?.getBoolean("Export-Hook-Plugin", true) ?: true
         val builder = StringBuilder()
         bindings?.getConfigurationSection("Binding-Map")?.let {

@@ -25,29 +25,28 @@ object HookPlaceholderAPI : PlaceholderExpansion {
 
     override val identifier = pluginId
 
-    override fun onPlaceholderRequest(player: Player?, params: String): String {
-        if (player?.isOnline == true) {
-            val session = MenuSession.getSession(player)
-            val args = params.split("_")
-            val key = args.getOrElse(1) { "" }
-            val value = { args.slice(1 until args.size).joinToString("_") }
+    override fun onPlaceholderRequest(player: Player?, args: String): String {
+        player ?: return "___"
 
-            return kotlin.runCatching { when (args[0].lowercase()) {
-                "menus" -> Menu.menus.size
-                "args" -> session.arguments[key.toIntOrNull() ?: 0]
-                "meta" -> Metadata.getMeta(player)[key]
-                "data" -> Metadata.getData(player)[key]
-                "globaldata" -> runCatching { Metadata.globalData[value()].toString() }.getOrElse { "null" }
-                "node" -> session.menu?.conf?.let { it[it.ignoreCase(value())].toString() }.toString()
-                "menu" -> menu(session, args)
-                "locale" -> session.locale
-                "js" -> if (enabledParseJavaScript) if (args.size > 1) JavaScriptAgent.eval(session, args[1]).asString() else "" else "UNABLE_PARSE"
-                "jexl" -> if (enabledParseJexlScript) if (args.size > 1) JexlAgent.eval(session, args[1]).asString() else "" else "UNABLE_PARSE"
-                else -> ""
-            } }.getOrNull().toString()
-        }
+        val session = MenuSession.getSession(player)
+        val params = args.split("_")
+        val key = params.getOrElse(1) { "" }
+        val value = { params.slice(1 until params.size).joinToString("_") }
 
-        return "__"
+        return kotlin.runCatching { when (params[0].lowercase()) {
+            "menus" -> Menu.menus.size
+            "args" -> session.arguments[key.toIntOrNull() ?: 0]
+            "meta" -> Metadata.getMeta(player)[key]
+            "data" -> Metadata.getData(player)[key]
+            "globaldata" -> runCatching { Metadata.globalData[value()].toString() }.getOrElse { "null" }
+            "node" -> session.menu?.conf?.let { it[it.ignoreCase(value())].toString() }.toString()
+            "menu" -> menu(session, params)
+            "locale" -> session.locale
+            "js" -> if (enabledParseJavaScript) if (params.size > 1) JavaScriptAgent.eval(session, params[1]).asString() else "" else "UNABLE_PARSE"
+            "jexl" -> if (enabledParseJexlScript) if (params.size > 1) JexlAgent.eval(session, params[1]).asString() else "" else "UNABLE_PARSE"
+            else -> ""
+        } }.getOrNull().toString()
+
     }
 
     private fun menu(session: MenuSession, params: List<String>): String {

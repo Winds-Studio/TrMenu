@@ -1,6 +1,7 @@
 package trplugins.menu.api.action.impl.script
 
 import taboolib.common.platform.ProxyPlayer
+import taboolib.common.platform.function.info
 import trplugins.menu.api.action.ActionHandle
 import trplugins.menu.api.action.base.ActionBase
 import trplugins.menu.api.action.base.ActionContents
@@ -19,6 +20,7 @@ class JavaScript(handle: ActionHandle) : ActionBase(handle) {
     override val regex = "((java)?-?script|js)s?".toRegex()
 
     override fun readContents(contents: Any): ActionContents {
+        info("preCompile: $contents")
         JavaScriptAgent.preCompile(contents.toString())
         return super.readContents(contents)
     }

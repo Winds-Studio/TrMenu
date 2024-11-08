@@ -1,10 +1,10 @@
 package trplugins.menu.module.internal.script.js
 
 import org.bukkit.Bukkit
+import taboolib.common.util.unsafeLazy
 import trplugins.menu.module.display.MenuSession
 import trplugins.menu.module.internal.data.Metadata
-import trplugins.menu.module.internal.hook.impl.GraalJSAgent
-import trplugins.menu.module.internal.hook.impl.HookGraalJS
+import trplugins.menu.module.internal.hook.HookPlugin
 import trplugins.menu.module.internal.script.Assist
 import trplugins.menu.module.internal.script.Bindings
 import trplugins.menu.util.EvalResult
@@ -23,7 +23,7 @@ object JavaScriptAgent {
         "js: ",
         "$ ",
     )
-    private val graalvm = HookGraalJS().isHooked
+    private val graalvm by unsafeLazy { HookPlugin.getGraalvm().isHooked }
 
     private val bindings = mutableMapOf(
         "bukkitServer" to Bukkit.getServer(),
@@ -72,7 +72,8 @@ object JavaScriptAgent {
             "varInt", java.util.function.Function<Any, Any?> { session.parse(it.toString()).toIntOrNull() ?: 0 },
         )
         setAttribute(
-            "varDouble", java.util.function.Function<Any, Any?> { session.parse(it.toString()).toDoubleOrNull() ?: 0.0 },
+            "varDouble",
+            java.util.function.Function<Any, Any?> { session.parse(it.toString()).toDoubleOrNull() ?: 0.0 },
         )
         setAttribute(
             "funs", java.util.function.Function<Any, Any?> { session.parse("{$it}") },
@@ -99,7 +100,8 @@ object JavaScriptAgent {
             "nodeInt", java.util.function.Function<Any, Any?> { session.parse("{node: $it}").toIntOrNull() ?: 0 },
         )
         setAttribute(
-            "nodeDouble", java.util.function.Function<Any, Any?> { session.parse("{node: $it}").toDoubleOrNull() ?: 0.0 },
+            "nodeDouble",
+            java.util.function.Function<Any, Any?> { session.parse("{node: $it}").toDoubleOrNull() ?: 0.0 },
         )
         setAttribute(
             "metas", java.util.function.Function<Any, Any?> { session.parse("{meta: $it}") },
@@ -108,7 +110,8 @@ object JavaScriptAgent {
             "metaInt", java.util.function.Function<Any, Any?> { session.parse("{meta: $it}").toIntOrNull() ?: 0 },
         )
         setAttribute(
-            "metaDouble", java.util.function.Function<Any, Any?> { session.parse("{meta: $it}").toDoubleOrNull() ?: 0.0 },
+            "metaDouble",
+            java.util.function.Function<Any, Any?> { session.parse("{meta: $it}").toDoubleOrNull() ?: 0.0 },
         )
         setAttribute(
             "datas", java.util.function.Function<Any, Any?> { session.parse("{data: $it}") },
@@ -117,7 +120,8 @@ object JavaScriptAgent {
             "dataInt", java.util.function.Function<Any, Any?> { session.parse("{data: $it}").toIntOrNull() ?: 0 },
         )
         setAttribute(
-            "dataDouble", java.util.function.Function<Any, Any?> { session.parse("{data: $it}").toDoubleOrNull() ?: 0.0 },
+            "dataDouble",
+            java.util.function.Function<Any, Any?> { session.parse("{data: $it}").toDoubleOrNull() ?: 0.0 },
         )
         setAttribute(
             "funcs", java.util.function.Function<Any, Any?> { session.parse("\${$it}") },
@@ -135,7 +139,8 @@ object JavaScriptAgent {
             "gdataInt", java.util.function.Function<Any, Any?> { session.parse("{gdata: $it}").toIntOrNull() ?: 0 },
         )
         setAttribute(
-            "gdataDouble", java.util.function.Function<Any, Any?> { session.parse("{gdata: $it}").toDoubleOrNull() ?: 0.0 },
+            "gdataDouble",
+            java.util.function.Function<Any, Any?> { session.parse("{gdata: $it}").toDoubleOrNull() ?: 0.0 },
         )
 
         val rawCode = Bindings.bootloaderCode + script

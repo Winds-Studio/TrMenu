@@ -3,6 +3,7 @@ package trplugins.menu.module.internal.hook
 import taboolib.common.LifeCycle
 import taboolib.common.platform.SkipTo
 import taboolib.common.platform.function.console
+import taboolib.common.platform.function.info
 import taboolib.module.lang.sendLang
 import trplugins.menu.module.internal.hook.impl.*
 import trplugins.menu.util.ClassUtils
@@ -112,6 +113,10 @@ object HookPlugin {
 
     fun getAzureFlow(): HookAzureFlow {
         return get(HookAzureFlow::class.java)
+    }
+
+    fun getGraalvm(): HookGraalJS {
+        return HookGraalJS()
     }
 
 }

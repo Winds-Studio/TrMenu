@@ -42,6 +42,6 @@ object FileListener {
 //        watcher.unregisterAll()
 //    }
 
-    val watcher = FileWatcher(100)
+    val watcher = FileWatcher.INSTANCE
 
 }
