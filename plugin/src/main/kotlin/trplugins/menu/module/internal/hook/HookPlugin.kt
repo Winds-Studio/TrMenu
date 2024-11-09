@@ -114,4 +114,8 @@ object HookPlugin {
         return get(HookAzureFlow::class.java)
     }
 
+    fun getGraalvm(): HookGraalJS {
+        return HookGraalJS()
+    }
+
 }
