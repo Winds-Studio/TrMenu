@@ -96,4 +96,6 @@ RegisterCommands:
 Scripts:
   Export-Hook-Plugin: true
   Mozilla-Compat: true
+  # 是否启用 GraalJS 作为引擎
+  Enable-GraalJS: false
   Binding-Map:
