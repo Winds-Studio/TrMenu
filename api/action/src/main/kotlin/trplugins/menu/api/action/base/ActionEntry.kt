@@ -31,6 +31,18 @@ data class ActionEntry(
         else proceed.invoke()
     }
 
+    fun eval(player: ProxyPlayer): Boolean {
+        var result = true
+        if (option.evalCondition(player)) {
+            option.evalPlayers(player) {
+                if (!(base as ActionEval).onEval(contents, it, player)) {
+                    result = false
+                }
+            }
+        }
+        return result
+    }
+
 
     companion object {
 

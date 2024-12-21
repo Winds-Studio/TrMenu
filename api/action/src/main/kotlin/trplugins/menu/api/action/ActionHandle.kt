@@ -5,10 +5,11 @@ import taboolib.common.platform.function.submit
 import taboolib.library.reflex.Reflex.Companion.invokeConstructor
 import trplugins.menu.api.action.base.ActionBase
 import trplugins.menu.api.action.base.ActionEntry
-import trplugins.menu.api.action.impl.logic.Break
+import trplugins.menu.api.action.base.ActionEval
 import trplugins.menu.api.action.impl.logic.Delay
 import trplugins.menu.util.ClassUtils
 import trplugins.menu.util.EvalResult
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.function.BiFunction
 
 /**
@@ -71,6 +72,7 @@ class ActionHandle(
         val run = mutableListOf<ActionEntry>()
         var result = true
         var delay = 0L
+        val allowed = AtomicBoolean(true)
 
         run filter@{
             while (actions.hasNext()) {
@@ -79,12 +81,22 @@ class ActionHandle(
                     continue
                 }
                 when {
-                    action.base is Break && action.option.evalCondition(player) -> {
-                        result = false
-                        return@filter
+                    action.base is ActionEval -> {
+                        if (delay > 0) {
+                            submit(delay = delay) {
+                                allowed.set(action.eval(player))
+                            }
+                        } else if (!action.eval(player)) {
+                            result = false
+                            return@filter
+                        }
                     }
                     action.base is Delay -> delay += action.base.getDelay(player, action.contents.stringContent())
-                    delay > 0 -> submit(delay = delay) { action.execute(player) }
+                    delay > 0 -> submit(delay = delay) {
+                        if (allowed.get()) {
+                            action.execute(player)
+                        }
+                    }
                     else -> run.add(action)
                 }
             }
