@@ -17,7 +17,7 @@ import trplugins.menu.module.internal.item.ItemSource
 import trplugins.menu.util.Regexs
 import trplugins.menu.util.bukkit.Heads
 import trplugins.menu.util.bukkit.ItemHelper
-import trplugins.menu.util.hybird.ModItemSource
+import trplugins.menu.util.hybrid.ModItemSource
 
 /**
  * @author Arasple
