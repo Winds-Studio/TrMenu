@@ -52,7 +52,7 @@ dependencies {
     taboo(project(":common"))
     taboo(project(":api:receptacle"))
     taboo(project(":api:action"))
-    taboo("ink.ptms:um:1.1.2")
+    taboo("ink.ptms:um:1.1.5")
 
     // Libraries
     compileOnly("org.apache.commons:commons-lang3:3.17.0")
