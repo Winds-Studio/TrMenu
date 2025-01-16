@@ -8,6 +8,7 @@ import taboolib.common.platform.function.submit
 import taboolib.module.configuration.Configuration
 import taboolib.module.lang.Type
 import taboolib.platform.util.cancelNextChat
+import trplugins.menu.TrMenu
 import trplugins.menu.api.event.MenuOpenEvent
 import trplugins.menu.api.event.MenuPageChangeEvent
 import trplugins.menu.api.receptacle.provider.PlatformProvider
@@ -36,6 +37,7 @@ class Menu(
     companion object {
 
         val menus = mutableListOf<Menu>()
+        val BEDROCK_DELAY get() = TrMenu.SETTINGS.getLong("Options.Bedrock-Open-Delay", 20L)
 
     }
 
@@ -69,9 +71,11 @@ class Menu(
 
         val determinedPage = page ?: settings.determinePage(session)
 
+        var menuSwitch = false
         if (session.menu == this) {
             return page(viewer, determinedPage)
         } else if (session.menu != null) {
+            menuSwitch = true
             if (PlatformProvider.isBedrockPlayer(viewer)) {
                 session.receptacle?.close(true)
             }
@@ -105,10 +109,21 @@ class Menu(
             loadIcon(session)
             loadTasks(session)
 
-            receptacle.open(viewer)
-            settings.properties.forEach { (id, value) ->
-                if (id >= 0 && value != null) {
-                    receptacle.property(id, value)
+            if (menuSwitch && BEDROCK_DELAY > 0 && PlatformProvider.isBedrockPlayer(viewer)) {
+                submit(async = Bukkit.isPrimaryThread(), delay = BEDROCK_DELAY) {
+                    receptacle.open(viewer)
+                    settings.properties.forEach { (id, value) ->
+                        if (id >= 0 && value != null) {
+                            receptacle.property(id, value)
+                        }
+                    }
+                }
+            } else {
+                receptacle.open(viewer)
+                settings.properties.forEach { (id, value) ->
+                    if (id >= 0 && value != null) {
+                        receptacle.property(id, value)
+                    }
                 }
             }
         }
@@ -152,7 +167,13 @@ class Menu(
             } else {
                 session.receptacle?.title(title, update = false)
             }
-            receptacle.open(viewer)
+            if (BEDROCK_DELAY > 0 && PlatformProvider.isBedrockPlayer(viewer)) {
+                submit(async = Bukkit.isPrimaryThread(), delay = BEDROCK_DELAY) {
+                    receptacle.open(viewer)
+                }
+            } else {
+                receptacle.open(viewer)
+            }
         }
     }
 
