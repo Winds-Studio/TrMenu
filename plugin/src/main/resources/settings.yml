@@ -11,6 +11,7 @@ Options:
     Bedrock: false
   Packet-Inventory:
     Create-Id: false
+  Bedrock-Open-Delay: 20
 
   Placeholders:
     JavaScript-Parse: false
